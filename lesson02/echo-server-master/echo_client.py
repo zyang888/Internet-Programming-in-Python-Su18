@@ -28,7 +28,11 @@ def client(msg, log_buffer=sys.stderr):
         #
         #       Log each chunk you receive.  Use the print statement below to
         #       do it. This will help in debugging problems
-        chunk = sock.recv(4096) 
+
+        while len(received_message) < len(msg):
+            chunk = sock.recv(16)
+            received_message += chunk.decode('utf8')
+
         print('received "{0}"'.format(chunk.decode('utf8')), file=log_buffer)
     finally:
         # TODO: after you break out of the loop receiving echoed chunks from
@@ -38,6 +42,7 @@ def client(msg, log_buffer=sys.stderr):
 
         # TODO: when all is said and done, you should return the entire reply
         # you received from the server as the return value of this function.
+        return received_message
 
 
 if __name__ == '__main__':
