@@ -119,6 +119,7 @@ class Server(object):
         while b'\n' not in received:
             received += self.client_connection.recv(16)
 
+        received = received[:-1]
         self.input_buffer = received.decode()
 
     def move(self, argument):
@@ -143,8 +144,6 @@ class Server(object):
         """
 
         # TODO: YOUR CODE HERE
-
-        print(self.room)
 
         if self.room == 0 and argument == "north":
             self.room = 3
